@@ -1,0 +1,9 @@
+.veralliaHeader {
+    background-image: url('/assets/header-image.jpg');
+    width: 100%;
+    height: 100px;
+    overflow: hidden;
+    background-position: 100% 20% ;
+    background-size: cover;
+    display: block;
+}
