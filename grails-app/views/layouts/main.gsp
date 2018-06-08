@@ -13,86 +13,87 @@
 
     <g:layoutHead/>
 </head>
-<body>
-    <div class="container-fluid">
+<body class="bg-light">
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+        <h5 class="my-0 mr-md-auto font-weight-normal">Verallia Montblanc IRPs</h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <g:link controller="IRP" action="create" class="btn btn-outline-danger">
+                <i class="fa fa-plus-square" aria-hidden="true"></i>
+                Nuevo
+            </g:link>
+            <g:link controller="IRP" action="index" class="btn btn-outline-danger">
+                <i class="fas fa-eye" aria-hidden="true"></i>
+                Pendientes
+            </g:link>
 
-
-        <div class="row">
-            <div class="veralliaHeader"></div>
-        </div>
-
-
-        <div class="row">
-
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
-                    <div class="list-group">
-                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-danger">
-                            <span>IRPS</span>
-                            <i class="fa fa-id-card" aria-hidden="true"></i>
-                        </h6>
-                        <g:link controller="IRP" action="create" class="list-group-item list-group-item-action">
-                            <i class="fa fa-plus-square" aria-hidden="true"></i>
-                            Nuevo IRP
-                        </g:link>
-                        <g:link controller="IRP" action="index" class="list-group-item list-group-item-action">
-                            <i class="fas fa-eye" aria-hidden="true"></i>
-                            Ver pendientes
-                        </g:link>
-                        <g:link controller="IRP" action="index" class="list-group-item list-group-item-action">
-                            <i class="fas fa-search" aria-hidden="true"></i>
-                            Ver IRPs
-                        </g:link>
-                    </div>
-
-                    <div class="list-group">
-                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-success">
-                            <span>Producción</span>
-                            <i class="fa fa-industry" aria-hidden="true"></i>
-                        </h6>
-                        <g:link controller="production" action="active" class="list-group-item list-group-item-action">
-                            <i class="fa fa-industry" aria-hidden="true"></i>
-                            Ver producciones activas
-                        </g:link>
-                        <g:link controller="production" action="create" class="list-group-item list-group-item-action">
-                            <i class="fa fa-plus-square" aria-hidden="true"></i>
-                            Nueva producción
-                        </g:link>
-                        <g:link controller="production" action="edit" class="list-group-item list-group-item-action">
-                            <i class="fa fa-check-square" aria-hidden="true"></i>
-                            Cerrar producción
-                        </g:link>
-                        <g:link controller="production" action="index" class="list-group-item list-group-item-action">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                            Ver producciones
-                        </g:link>
-                    </div>
-
-                    <div class="list-group">
-                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-primary">
-                            <span>Modelo</span>
-                            <i class="fa fa-database" aria-hidden="true"></i>
-                        </h6>
-                        <g:link controller="model" action="create" class="list-group-item list-group-item-action">
-                            <i class="fa fa-plus-square" aria-hidden="true"></i>
-                            Nuevo modelo
-                        </g:link>
-                        <g:link controller="model" action="index" class="list-group-item list-group-item-action">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                            Ver modelos
-                        </g:link>
-                    </div>
+            <div class="btn-group">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="irpDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-id-card" aria-hidden="true"></i>
+                    IRPs
+                </button>
+                <div class="dropdown-menu" aria-labelledby="irpDropDown">
+                    <g:link controller="IRP" action="index" class="dropdown-item">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                        Ver IRPs
+                    </g:link>
                 </div>
-            </nav>
+            </div>
 
+            <div class="btn-group">
+                <button class="btn btn-success dropdown-toggle" type="button" id="productionDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-industry" aria-hidden="true"></i>
+                    Producción
+                </button>
+                <div class="dropdown-menu" aria-labelledby="productionDropDown">
+                    <g:link controller="production" action="active" class="dropdown-item">
+                        <i class="fa fa-industry" aria-hidden="true"></i>
+                        Ver producciones activas
+                    </g:link>
+                    <g:link controller="production" action="create" class="dropdown-item">
+                        <i class="fa fa-plus-square" aria-hidden="true"></i>
+                        Nueva producción
+                    </g:link>
+                    <g:link controller="production" action="edit" class="dropdown-item">
+                        <i class="fa fa-check-square" aria-hidden="true"></i>
+                        Cerrar producción
+                    </g:link>
+                    <g:link controller="production" action="index" class="dropdown-item">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        Ver producciones
+                    </g:link>
+                </div>
+            </div>
 
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-3 mt-3 mb-1">
-                <g:layoutBody/>
-            </main>
-        </div>
+            <div class="btn-group">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="productionDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-database" aria-hidden="true"></i>
+                    Modelo
+                </button>
+                <div class="dropdown-menu" aria-labelledby="productionDropDown">
+                    <g:link controller="model" action="create" class="dropdown-item">
+                        <i class="fa fa-plus-square" aria-hidden="true"></i>
+                        Nuevo modelo
+                    </g:link>
+                    <g:link controller="model" action="index" class="dropdown-item">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        Ver modelos
+                    </g:link>
+                </div>
+            </div>
+
+        </nav>
     </div>
 
-    <div class="footer" role="contentinfo"></div>
+    <div class="container">
+        <main role="main" class="mb-3">
+            <g:layoutBody/>
+        </main>
+    </div>
+
+
+
+
+<div class="footer" role="contentinfo"></div>
 
     <div id="spinner" class="spinner" style="display:none;">
         <g:message code="spinner.alt" default="Loading&hellip;"/>
