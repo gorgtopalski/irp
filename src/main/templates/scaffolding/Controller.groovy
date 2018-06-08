@@ -92,6 +92,11 @@ class ${className}Controller {
         }
     }
 
+    def search() {
+        notFound()
+        return
+    }
+
     protected void notFound() {
         request.withFormat {
             form multipartForm {
@@ -102,4 +107,6 @@ class ${className}Controller {
             '*'{ render status: NOT_FOUND }
         }
     }
+
+
 }

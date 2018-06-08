@@ -6,7 +6,7 @@
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
-        <a href="#show-${propertyName}" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+        %{--<a href="#show-${propertyName}" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>--}%
         %{--<div class="nav" role="navigation">--}%
             %{--<ul>--}%
                 %{--<li><a class="home" href="\${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>--}%
@@ -14,29 +14,49 @@
                 %{--<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>--}%
             %{--</ul>--}%
         %{--</div>--}%
-        <div class="nav list-group" role="navigation">
-            <ul>
-                <li>
-                    <a class="list-group-item list-group-item-action" href="\${createLink(uri: '/')}">
-                        <i class="fas fa-home"></i>
-                        <g:message code="default.home.label"/>
-                    </a>
-                </li>
-                <li>
-                    <g:link class="list-group-item list-group-item-action" action="index">
-                        <i class="far fa-list-alt"></i>
-                        <g:message code="default.list.label" args="[entityName]" />
-                    </g:link>
-                </li>
-                <li>
-                    <g:link class="list-group-item list-group-item-action" action="create">
-                        <i class="far fa-plus-square"></i>
-                        <g:message code="default.new.label" args="[entityName]"/>
-                    </g:link>
-                </li>
-            </ul>
-        </div>
+        %{--<div class="nav list-group" role="navigation">--}%
+            %{--<ul>--}%
+                %{--<li>--}%
+                    %{--<a class="list-group-item list-group-item-action" href="\${createLink(uri: '/')}">--}%
+                        %{--<i class="fas fa-home"></i>--}%
+                        %{--<g:message code="default.home.label"/>--}%
+                    %{--</a>--}%
+                %{--</li>--}%
+                %{--<li>--}%
+                    %{--<g:link class="list-group-item list-group-item-action" action="index">--}%
+                        %{--<i class="far fa-list-alt"></i>--}%
+                        %{--<g:message code="default.list.label" args="[entityName]" />--}%
+                    %{--</g:link>--}%
+                %{--</li>--}%
+                %{--<li>--}%
+                    %{--<g:link class="list-group-item list-group-item-action" action="create">--}%
+                        %{--<i class="far fa-plus-square"></i>--}%
+                        %{--<g:message code="default.new.label" args="[entityName]"/>--}%
+                    %{--</g:link>--}%
+                %{--</li>--}%
+            %{--</ul>--}%
+        %{--</div>--}%
 
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="navbar-nav mr-auto">
+                <a class="nav-item nav-link" href="\${createLink(uri: '/')}">
+                    <i class="fas fa-home"></i>
+                    <g:message code="default.home.label"/>
+                </a>
+                <g:link class="nav-item nav-link" action="create">
+                    <i class="far fa-plus-square"></i>
+                    <g:message code="default.new.label" args="[entityName]"/>
+                </g:link>
+                <g:link class="nav-item nav-link" action="index">
+                    <i class="far fa-list-alt"></i>
+                    <g:message code="default.list.label" args="[entityName]" />
+                </g:link>
+            </div>
+            <g:form method="GET" action="search" controller="${propertyName}" class="form-inline my-2 my-lg-0">
+                <input name="query" class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+            </g:form>
+        </nav>
 
 
         <div id="show-${propertyName}" class="content scaffold-show" role="main">
