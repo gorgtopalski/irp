@@ -1,0 +1,112 @@
+package com.verallia
+
+import grails.validation.ValidationException
+import static org.springframework.http.HttpStatus.*
+
+class ModelController {
+
+    ModelService modelService
+
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+    def index(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        respond modelService.list(params), model:[modelCount: modelService.count()]
+    }
+
+    def show(Long id) {
+        respond modelService.get(id)
+    }
+
+    def create() {
+        respond new Model(params)
+    }
+
+    def save(Model model) {
+        if (model == null) {
+            notFound()
+            return
+        }
+
+        try {
+            modelService.save(model)
+        } catch (ValidationException e) {
+            respond model.errors, view:'create'
+            return
+        }
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'model.label', default: 'Model'), model.toString()])
+                flash.alert = 'success'
+                redirect model
+            }
+            '*' { respond model, [status: CREATED] }
+        }
+    }
+
+    def edit(Long id) {
+        respond modelService.get(id)
+    }
+
+    def update(Model model) {
+        if (model == null) {
+            notFound()
+            return
+        }
+
+        try {
+            modelService.save(model)
+        } catch (ValidationException e) {
+            respond model.errors, view:'edit'
+            return
+        }
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'model.label', default: 'Model'), model.toString()])
+                flash.alert = 'success'
+                redirect model
+            }
+            '*'{ respond model, [status: OK] }
+        }
+    }
+
+    def delete(Long id) {
+        if (id == null) {
+            notFound()
+            return
+        }
+
+        def name =  modelService.get(id).toString()
+
+        modelService.delete(id)
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'model.label', default: 'Model'), name])
+                flash.alert = 'danger'
+                redirect action:"index", method:"GET"
+            }
+            '*'{ render status: NO_CONTENT }
+        }
+    }
+
+    def search() {
+        notFound()
+        return
+    }
+
+    protected void notFound() {
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'model.label', default: 'Model'), params.id])
+                flash.alert = 'alert'
+                redirect action: "index", method: "GET"
+            }
+            '*'{ render status: NOT_FOUND }
+        }
+    }
+
+
+}
