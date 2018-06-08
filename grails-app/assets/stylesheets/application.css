@@ -7,11 +7,18 @@
 * You're free to add application-wide styles to this file and they'll appear at the top of the
 * compiled file, but it's generally better to create a new file per style scope.
 *
+*= require pricing
+*= require form-validation
 *= require custom
-*= require grails
-*= require main
-*= require mobile
 *= require bootstrap
 *= require fontawesome-all
 *= require_self
 */
+
+/*
+
+TODO Delete
+require grails
+require main
+require mobile
+ */
