@@ -96,6 +96,10 @@ dataSource:
     password: ''
 
 environments:
+    grails:
+      plugin:
+        fields:
+          disableLookupCache: true
     development:
         dataSource:
             dbCreate: create-drop
