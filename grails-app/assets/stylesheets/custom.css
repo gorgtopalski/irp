@@ -33,3 +33,7 @@
     /*float: left;*/
     /*margin-top: 25px;*/
 /*}*/
+
+.required-indicator {
+    color: red;
+}
