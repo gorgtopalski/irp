@@ -15,7 +15,7 @@
 </head>
 <body class="bg-light">
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-        <h5 class="my-0 mr-md-auto font-weight-normal">Verallia Montblanc IRPs</h5>
+        <a class="my-0 mr-md-auto font-weight-normal h5" href="/">Verallia Montblanc IRPs</a>
         <nav class="my-2 my-md-0 mr-md-3">
             <g:link controller="IRP" action="create" class="btn btn-outline-danger">
                 <i class="fa fa-plus-square" aria-hidden="true"></i>
