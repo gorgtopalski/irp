@@ -9,19 +9,16 @@
             </div>
         </g:each>
     </g:if>
-    <div class="input-group mb-3">
+    <div class="mb-3">
 
-        <div class="input-group-prepend">
-            <label class="input-group-text" for="${property}">
-                ${label}
-                <g:if test="${required}">
-                    <span class="required-indicator">*</span>
-                </g:if>
-            </label>
-        </div>
+        <label for="${property}">
+            ${label}
+            <g:if test="${required}">
+                <span class="required-indicator">*</span>
+            </g:if>
+        </label>
 
         <f:widget property="${property}"/>
-
     </div>
 </div>
 
