@@ -45,13 +45,31 @@ class BootStrap {
 
     def setupSampleData()
     {
-        new Model(blueprint: '6227WC', name: 'Dorica 25').save()
+        def dorica = new Model(blueprint: '6227WC', name: 'Dorica 25').save()
         new Model(blueprint: '6305WB', name: 'Cava STD 20 (BR)').save()
         new Model(blueprint: '7111WA', name: 'Cava 75 (835)').save()
         new Model(blueprint: '7171WA', name: 'Aceite Moro 50').save()
         new Model(blueprint: '4185WB', name: 'Cava 75').save()
         new Model(blueprint: '6837WA', name: 'Hoja 75').save()
         new Model(blueprint: '6841WB', name: 'Bord 75 Eco Optima RE').save()
-        new Model(blueprint: '7050WA', name: 'Bord 75 Toro Loco BVS').save()
+        new Model(blueprint: '7050WA', name: 'Bord 75 Toro Loco BVS').save(flush:true)
+
+
+        new Production(model: dorica, line: Line.get(1), active: true, startDate: new Date()-1).save()
+        new Production(model: dorica, line: Line.get(1), finished: true, active: false, startDate: new Date()-20, finishDate: new Date()-10, totalPallets: 1000).save()
+        new Production(model: dorica, line: Line.get(2), finished: true, active: false, startDate: new Date()-30, finishDate: new Date()-20, totalPallets: 1250).save()
+        new Production(model: dorica, line: Line.get(3), finished: true, active: false, startDate: new Date()-40, finishDate: new Date()-30, totalPallets: 1511).save()
+        new Production(model: dorica, line: Line.get(4), finished: true, active: false, startDate: new Date()-50, finishDate: new Date()-40, totalPallets: 8000).save()
+        new Production(model: dorica, line: Line.get(1), finished: true, active: false, startDate: new Date()-60, finishDate: new Date()-50, totalPallets: 5415).save()
+        new Production(model: dorica, line: Line.get(2), finished: true, active: false, startDate: new Date()-70, finishDate: new Date()-60, totalPallets: 10).save()
+        new Production(model: dorica, line: Line.get(2), finished: true, active: false, startDate: new Date()-80, finishDate: new Date()-70, totalPallets: 150).save()
+        new Production(model: dorica, line: Line.get(5), finished: true, active: false, startDate: new Date()-90, finishDate: new Date()-80, totalPallets: 1150).save()
+        new Production(model: dorica, line: Line.get(5), finished: true, active: false, startDate: new Date()-100, finishDate: new Date()-90, totalPallets: 101541).save()
+        new Production(model: dorica, line: Line.get(1), finished: true, active: false, startDate: new Date()-110, finishDate: new Date()-100, totalPallets: 1000).save()
+        new Production(model: dorica, line: Line.get(1), finished: true, active: false, startDate: new Date()-120, finishDate: new Date()-110, totalPallets: 1000).save(flush:true)
+
+
+
+
     }
 }
