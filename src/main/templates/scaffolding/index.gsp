@@ -6,28 +6,7 @@
         <title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
-        %{--<a href="#list-${propertyName}" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>--}%
-
-
-        %{--<div class="nav list-group" role="navigation">--}%
-            %{--<ul>--}%
-                %{--<li>--}%
-                    %{--<a class="list-group-item list-group-item-action" href="\${createLink(uri: '/')}">--}%
-                        %{--<i class="fas fa-home"></i>--}%
-                        %{--<g:message code="default.home.label"/>--}%
-                    %{--</a>--}%
-                %{--</li>--}%
-                %{--<li>--}%
-                    %{--<g:link class="list-group-item list-group-item-action" action="create">--}%
-                        %{--<i class="far fa-plus-square"></i>--}%
-                        %{--<g:message code="default.new.label" args="[entityName]"/>--}%
-                    %{--</g:link>--}%
-                %{--</li>--}%
-            %{--</ul>--}%
-        %{--</div>--}%
-
-
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
             <div class="navbar-nav mr-auto">
                 <a class="nav-item nav-link" href="\${createLink(uri: '/')}">
                     <i class="fas fa-home"></i>
@@ -44,9 +23,8 @@
             </g:form>
         </nav>
 
-
-
         <div id="list-${propertyName}" class="content scaffold-list" role="main">
+            <br>
             <h1><g:message code="default.list.label" args="[entityName]" /></h1>
 
             <g:if test="\${flash.message}">
@@ -59,12 +37,12 @@
                 </div>
             </g:if>
 
-
             <f:table collection="\${${propertyName}List}" />
 
             <div class="pagination">
                 <g:paginate total="\${${propertyName}Count ?: 0}" />
             </div>
+
         </div>
     </body>
 </html>

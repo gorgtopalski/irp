@@ -6,31 +6,7 @@
         <title><g:message code="default.create.label" args="[entityName]" /></title>
     </head>
     <body>
-        %{--<a href="#create-${propertyName}" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>--}%
-        %{--<div class="nav" role="navigation">--}%
-            %{--<ul>--}%
-                %{--<li><a class="home" href="\${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>--}%
-                %{--<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>--}%
-            %{--</ul>--}%
-        %{--</div>--}%
-        %{--<div class="nav list-group" role="navigation">--}%
-            %{--<ul>--}%
-                %{--<li>--}%
-                    %{--<a class="list-group-item list-group-item-action" href="\${createLink(uri: '/')}">--}%
-                        %{--<i class="fas fa-home"></i>--}%
-                        %{--<g:message code="default.home.label"/>--}%
-                    %{--</a>--}%
-                %{--</li>--}%
-                %{--<li>--}%
-                    %{--<g:link class="list-group-item list-group-item-action" action="index">--}%
-                        %{--<i class="far fa-list-alt"></i>--}%
-                        %{--<g:message code="default.list.label" args="[entityName]" />--}%
-                    %{--</g:link>--}%
-                %{--</li>--}%
-            %{--</ul>--}%
-        %{--</div>--}%
-
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
             <div class="navbar-nav mr-auto">
                 <a class="nav-item nav-link" href="\${createLink(uri: '/')}">
                     <i class="fas fa-home"></i>
@@ -47,9 +23,8 @@
             </g:form>
         </nav>
 
-
-
-    <div id="create-${propertyName}" class="content scaffold-create" role="main">
+        <div id="create-${propertyName}" class="content scaffold-create" role="main">
+            <br>
             <h1><g:message code="default.create.label" args="[entityName]" /></h1>
 
             <g:if test="\${flash.message}">
@@ -74,8 +49,14 @@
                 <fieldset class="form">
                     <f:all bean="${propertyName}"/>
                 </fieldset>
+
                 <fieldset class="buttons">
-                    <g:submitButton name="create" class="save" value="\${message(code: 'default.button.create.label', default: 'Create')}" />
+                    <div class="float-right">
+                        <button type="submit" name="create" class="btn btn-success">
+                            <i class="far fa-save"></i>
+                            \${message(code: 'default.button.create.label', default: 'Crear')}
+                        </button>
+                    </div>
                 </fieldset>
             </g:form>
         </div>
