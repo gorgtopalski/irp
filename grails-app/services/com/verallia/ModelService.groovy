@@ -15,4 +15,12 @@ abstract class ModelService {
 
     abstract Model save(Model model)
 
+    List<Model> getWithActiveProductions(Map args)
+    {
+        def list = list(args)
+
+        list.each { model -> model.productions = model.productions.grep { it.active } }
+
+        return list
+    }
 }
