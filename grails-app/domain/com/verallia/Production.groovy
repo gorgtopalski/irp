@@ -22,4 +22,12 @@ class Production {
         irp             nullable: true
     }
 
+    @Override
+    String toString() {
+
+        def start = startDate.format('dd/MM/YY')
+        def end = finishDate ? finishDate.format('dd/MM/YY') : '*'
+
+        return "[ $start - $end ] L-$line"
+    }
 }
