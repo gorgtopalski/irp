@@ -3,9 +3,6 @@
     <tr>
         <th scope="col">#</th>
         <g:each in="${domainProperties}" var="p" status="i">
-
-
-
             <g:sortableColumn property="${p.property}" title="${p.label}" scope="col"/>
         </g:each>
         <th scope="col">Editar</th>
@@ -13,7 +10,7 @@
     </thead>
     <tbody>
     <g:each in="${collection}" var="bean" status="i">
-        <tr onclick="document.location = '${createLink( action:'show', id: bean.id)}'; ">
+        <tr ondblclick="document.location = '${createLink( action:'show', id: bean.id)}'; ">
             <th scope="row">${i+1}</th>
             <g:each in="${domainProperties}" var="p">
                 <td>
