@@ -1,10 +1,10 @@
 package com.verallia
 
-class Production {
-
+class  Production
+{
     static belongsTo = [model: Model]
     Line line
-    Date startDate
+    Date startDate = new Date().clearTime()
     Date finishDate
     boolean active = true
     boolean finished = false
@@ -25,7 +25,7 @@ class Production {
     @Override
     String toString() {
 
-        def start = startDate.format('dd/MM/YY')
+        def start = startDate ? startDate.format('dd/MM/YY') : '*'
         def end = finishDate ? finishDate.format('dd/MM/YY') : '*'
 
         return "[ $start - $end ] L-$line"

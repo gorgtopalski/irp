@@ -17,4 +17,9 @@ abstract class ProductionService {
 
     abstract List<Production> findAllByActive(boolean active, Map args)
 
+    abstract List<Production> findAllByLine(Line line, Map args)
+
+    abstract Long countByActive(boolean active)
+
+    abstract Long countByLine(Line line)
 }

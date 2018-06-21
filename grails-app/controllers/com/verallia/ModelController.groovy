@@ -11,11 +11,34 @@ class ModelController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
+
+        if (params.sort == 'productions')
+        {
+            params.remove('sort')
+            params.remove('order')
+        }
+
         respond modelService.getWithActiveProductions(params), model:[modelCount: modelService.count()]
     }
 
     def show(Long id) {
-        respond modelService.get(id)
+        def model = modelService.get(id)
+        if (model)
+        {
+            def sort = params.sort ?: 'startDate'
+            def order = params.order ?: 'desc'
+
+            model.productions = model.productions.sort { a,b ->
+                if (order == 'desc')
+                {
+                    b."$sort" <=> a."$sort"
+                }
+                else {
+                    a."$sort" <=> b."$sort"
+                }
+            }
+        }
+        respond model
     }
 
     def create() {
