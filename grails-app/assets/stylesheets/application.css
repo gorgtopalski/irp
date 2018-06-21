@@ -12,6 +12,7 @@
 *= require custom
 *= require bootstrap
 *= require fontawesome-all
+*= require datepicker
 *= require_self
 */
 
