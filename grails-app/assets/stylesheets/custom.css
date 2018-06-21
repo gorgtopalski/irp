@@ -37,3 +37,71 @@
 .required-indicator {
     color: red;
 }
+
+/* PAGINATION */
+
+.pagination {
+    border-top: 0;
+    /*margin: 0.8em 1em 0.3em;*/
+    padding: 0.3em 0.1em;
+    text-align: center;
+    -moz-box-shadow: 0 0 3px 1px #AAAAAA;
+    -webkit-box-shadow: 0 0 3px 1px #AAAAAA;
+    box-shadow: 0 0 3px 1px #AAAAAA;
+    background-color: #f8f9fa;
+}
+
+.pagination a,
+.pagination .currentStep {
+    color: #666666;
+    display: inline-block;
+    margin: 0 0.1em;
+    padding: 0.25em 0.7em;
+    text-decoration: none;
+    -moz-border-radius: 0.3em;
+    -webkit-border-radius: 0.3em;
+    border-radius: 0.3em;
+}
+
+.pagination a:hover, .pagination a:focus,
+.pagination .currentStep {
+    background-color: #999999;
+    color: #ffffff;
+    outline: none;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
+}
+
+.no-borderradius .pagination a:hover, .no-borderradius .pagination a:focus,
+.no-borderradius .pagination .currentStep {
+    background-color: transparent;
+    color: #444444;
+    text-decoration: underline;
+}
+
+.border-11 {
+    border-color: #84ce23 !important;
+}
+
+.border-11A {
+    border-color: #84ce23 !important;
+}
+
+.border-11B {
+    border-color: #f902c8 !important;
+}
+
+.border-12 {
+    border-color: #ffc107 !important;
+}
+
+.border-12A {
+    border-color: #ffc107 !important;
+}
+
+.border-12B {
+    border-color: #f96d02 !important;
+}
+
+.border-13 {
+    border-color: #007bff !important;
+}
