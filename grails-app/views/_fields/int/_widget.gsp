@@ -1,2 +1,2 @@
-<input name="${property}" type="number" class="form-control" value="0"/>
+<input name="${property}" type="number" class="form-control" value="${value}"/>
 

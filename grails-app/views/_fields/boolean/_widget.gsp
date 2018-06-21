@@ -1,1 +1,1 @@
-<input id="${property}" name="${property}" type="checkbox" class="form-check-input"/>
+<input id="${property}" name="${property}" type="checkbox" class="form-check-input" ${ value ? 'checked' : '' }/>

@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="form-group mb-3">
     <g:if test="${errors}">
         <g:each in="${errors}" var="error">
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -9,15 +9,25 @@
             </div>
         </g:each>
     </g:if>
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <label class="input-group-text" for="${property}">
-                ${label}
-                <g:if test="${required}">
-                    <span class="required-indicator">*</span>
-                </g:if>
-            </label>
-        </div>
-        <f:widget property="${property}"/>
-    </div>
+
+    <label for="${property}">
+        ${label}
+        <g:if test="${required}">
+            <span class="required-indicator">*</span>
+        </g:if>
+    </label>
+
+    <f:widget property="${property}"/>
+
+    %{--<div class="input-group">--}%
+        %{--<div class="input-group-prepend">--}%
+            %{--<label class="input-group-text" for="${property}">--}%
+                %{--${label}--}%
+                %{--<g:if test="${required}">--}%
+                    %{--<span class="required-indicator">*</span>--}%
+                %{--</g:if>--}%
+            %{--</label>--}%
+        %{--</div>--}%
+        %{--<f:widget property="${property}"/>--}%
+    %{--</div>--}%
 </div>

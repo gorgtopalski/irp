@@ -1,4 +1,4 @@
-<select class="custom-select" id="${property}" name="${property}" required>
+<select class="custom-select" id="${property}" name="${property}">
     <g:each var="option" in="${type.list()}">
 
         <g:if test="${ value != null}">
