@@ -1,6 +1,6 @@
 package com.verallia
 
-class Line {
+class Line implements Comparable<Line>{
 
     String name
 
@@ -11,5 +11,10 @@ class Line {
     @Override
     String toString() {
         return name
+    }
+
+    @Override
+    int compareTo(Line o) {
+        this.id <=> o.id
     }
 }
