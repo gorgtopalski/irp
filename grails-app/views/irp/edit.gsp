@@ -2,8 +2,8 @@
 <html>
     <head>
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'model.label', default: 'Model')}" />
-        <title><g:message code="default.show.label" args="[entityName]" /></title>
+        <g:set var="entityName" value="${message(code: 'irp.label', default: 'Irp')}" />
+        <title><g:message code="default.edit.label" args="[entityName]" /></title>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
@@ -21,16 +21,15 @@
                     <g:message code="default.list.label" args="[entityName]" />
                 </g:link>
             </div>
-            <g:form method="GET" action="search" controller="model" class="form-inline my-2 my-lg-0">
+            <g:form method="GET" action="search" controller="irp" class="form-inline my-2 my-lg-0">
                 <input name="query" class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
             </g:form>
         </nav>
 
-
-        <div id="show-model" class="content scaffold-show" role="main">
+        <div id="edit-irp" class="content scaffold-edit" role="main">
             <br>
-            <h1><g:message code="default.show.label" args="[entityName]" /></h1>
+            <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
 
             <g:if test="${flash.message}">
                 <div class="alert alert-${flash.alert ?: 'primary'} alert-dismissible fade show" role="alert">
@@ -42,38 +41,27 @@
                 </div>
             </g:if>
 
-            <f:with bean="model">
-                <f:display property="name" wrapper="domainFields"/>
-                <f:display property="blueprint" wrapper="domainFields"/>
-
-            </f:with>
-
-            <g:form resource="${this.model}" method="DELETE">
+            <g:hasErrors bean="${this.irp}">
+            <ul class="errors" role="alert">
+                <g:eachError bean="${this.irp}" var="error">
+                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+                </g:eachError>
+            </ul>
+            </g:hasErrors>
+            <g:form resource="${this.irp}" method="PUT">
+                <g:hiddenField name="version" value="${this.irp?.version}" />
+                <fieldset class="form">
+                    <f:all bean="irp"/>
+                </fieldset>
                 <fieldset class="buttons">
-                    <div class="float-left">
-                        <button type="submit" name="delete" class="btn btn-danger" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
-                            <i class="far fa-trash-alt"></i>
-                            ${message(code: 'default.button.delete.label', default: 'Delete')}
-                        </button>
-                    </div>
                     <div class="float-right">
-                        <g:link class="btn btn-success" action="create" controller="production" params="['model.id': this.model.id ]">
-                            <i class="far fa-plus-square"></i>
-                            Nueva produccion
-                        </g:link>
-                        <g:link class="btn btn-warning" action="edit" resource="${this.model}">
+                        <button type="submit" name="update" class="btn btn-warning">
                             <i class="far fa-edit"></i>
-                            <g:message code="default.button.edit.label" default="Edit" />
-                        </g:link>
+                            <g:message code="default.button.update.label" default="Update" />
+                        </button>
                     </div>
                 </fieldset>
             </g:form>
-            <br>
-            <f:table   collection="${this.model.productions}"
-                       domainClass="com.verallia.Production"
-                       template="showProductionFromModelTable"
-                       except="['model', 'id', 'irp']"
-            />
         </div>
     </body>
 </html>

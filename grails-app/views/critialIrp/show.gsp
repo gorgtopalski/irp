@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'model.label', default: 'Model')}" />
+        <g:set var="entityName" value="${message(code: 'critialIrp.label', default: 'CritialIrp')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -21,14 +21,14 @@
                     <g:message code="default.list.label" args="[entityName]" />
                 </g:link>
             </div>
-            <g:form method="GET" action="search" controller="model" class="form-inline my-2 my-lg-0">
+            <g:form method="GET" action="search" controller="critialIrp" class="form-inline my-2 my-lg-0">
                 <input name="query" class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
             </g:form>
         </nav>
 
 
-        <div id="show-model" class="content scaffold-show" role="main">
+        <div id="show-critialIrp" class="content scaffold-show" role="main">
             <br>
             <h1><g:message code="default.show.label" args="[entityName]" /></h1>
 
@@ -42,13 +42,9 @@
                 </div>
             </g:if>
 
-            <f:with bean="model">
-                <f:display property="name" wrapper="domainFields"/>
-                <f:display property="blueprint" wrapper="domainFields"/>
+            <f:display bean="critialIrp" />
 
-            </f:with>
-
-            <g:form resource="${this.model}" method="DELETE">
+            <g:form resource="${this.critialIrp}" method="DELETE">
                 <fieldset class="buttons">
                     <div class="float-left">
                         <button type="submit" name="delete" class="btn btn-danger" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
@@ -57,23 +53,14 @@
                         </button>
                     </div>
                     <div class="float-right">
-                        <g:link class="btn btn-success" action="create" controller="production" params="['model.id': this.model.id ]">
-                            <i class="far fa-plus-square"></i>
-                            Nueva produccion
-                        </g:link>
-                        <g:link class="btn btn-warning" action="edit" resource="${this.model}">
+                        <g:link class="btn btn-warning" action="edit" resource="${this.critialIrp}">
                             <i class="far fa-edit"></i>
                             <g:message code="default.button.edit.label" default="Edit" />
                         </g:link>
-                    </div>
                 </fieldset>
+                </div>
             </g:form>
-            <br>
-            <f:table   collection="${this.model.productions}"
-                       domainClass="com.verallia.Production"
-                       template="showProductionFromModelTable"
-                       except="['model', 'id', 'irp']"
-            />
+
         </div>
     </body>
 </html>

@@ -36,10 +36,10 @@
                 </div>
             </g:if>
 
-            <f:table collection="${productionList}"/>
+            <f:table collection="${productionList}" template="activeProductionTable"/>
 
             <div class="pagination">
-                <g:paginate total="${productionCount ?: 0}" id="${id}"/>
+                <g:paginate total="${productionCount ?: 0}" />
             </div>
 
         </div>

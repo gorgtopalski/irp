@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'production.label', default: 'Production')}" />
+        <g:set var="entityName" value="${message(code: 'irp.label', default: 'Irp')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -17,13 +17,13 @@
                     <g:message code="default.list.label" args="[entityName]" />
                 </g:link>
             </div>
-            <g:form method="GET" action="search" controller="production" class="form-inline my-2 my-lg-0">
+            <g:form method="GET" action="search" controller="irp" class="form-inline my-2 my-lg-0">
                 <input name="query" class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
             </g:form>
         </nav>
 
-        <div id="create-production" class="content scaffold-create" role="main">
+        <div id="create-irp" class="content scaffold-create" role="main">
             <br>
             <h1><g:message code="default.create.label" args="[entityName]" /></h1>
 
@@ -38,32 +38,57 @@
             </g:if>
 
 
-            <g:hasErrors bean="${this.production}">
+            <g:hasErrors bean="${this.irp}">
             <ul class="errors" role="alert">
-                <g:eachError bean="${this.production}" var="error">
+                <g:eachError bean="${this.irp}" var="error">
                 <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
                 </g:eachError>
             </ul>
             </g:hasErrors>
-            <g:form resource="${this.production}" method="POST">
+            <g:form resource="${this.irp}" method="POST">
                 <fieldset class="form">
-                    <f:with bean="production" >
-                        <f:field property="model"/>
-                        <f:field property="line"/>
-                        <f:field property="startDate"/>
-                        <f:field property="active"/>
-                        <hr>
+                    %{--<f:all bean="irp"/>--}%
+
+
+                    <f:with bean="irp">
                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <f:field property="finishDate"/>
-                                <f:field property="finished"/>
+                            <div class="col">
+                                <f:field property="date"/>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <f:field property="totalPallets"/>
+                            <div class="col">
+                                <f:field property="production"/>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col">
+                                <f:field property="motive"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <f:field property="firstPallet"/>
+                                <f:field property="lastPallet"/>
+                            </div>
+                            <div class="col">
+                                <f:field property="team"/>
+                                <f:field property="shift"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <f:field property="comment"/>
+                            </div>
+                            <div class="col">
+                                <f:field property="pending"/>
+                                <f:field property="critical"/>
+                                <f:field property="labels"/>
+                                <f:field property="wholeShift"/>
+                            </div>
+                        </div>
+
                     </f:with>
                 </fieldset>
+
                 <fieldset class="buttons">
                     <div class="float-right">
                         <button type="submit" name="create" class="btn btn-success">

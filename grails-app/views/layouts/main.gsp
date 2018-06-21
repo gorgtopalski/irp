@@ -17,11 +17,7 @@
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
         <a class="my-0 mr-md-auto font-weight-normal h5" href="/">Verallia Montblanc IRPs</a>
         <nav class="my-2 my-md-0 mr-md-3">
-            <g:link controller="IRP" action="create" class="btn btn-outline-danger">
-                <i class="fa fa-plus-square" aria-hidden="true"></i>
-                Nuevo
-            </g:link>
-            <g:link controller="IRP" action="index" class="btn btn-outline-danger">
+            <g:link controller="irp" action="index" class="btn btn-outline-danger">
                 <i class="fas fa-eye" aria-hidden="true"></i>
                 Pendientes
             </g:link>
@@ -32,7 +28,7 @@
                     IRPs
                 </button>
                 <div class="dropdown-menu" aria-labelledby="irpDropDown">
-                    <g:link controller="IRP" action="index" class="dropdown-item">
+                    <g:link controller="irp" action="index" class="dropdown-item">
                         <i class="fas fa-search" aria-hidden="true"></i>
                         Ver IRPs
                     </g:link>
@@ -53,10 +49,10 @@
                         <i class="fa fa-plus-square" aria-hidden="true"></i>
                         Nueva producción
                     </g:link>
-                    <g:link controller="production" action="edit" class="dropdown-item">
-                        <i class="fa fa-check-square" aria-hidden="true"></i>
-                        Cerrar producción
-                    </g:link>
+                    %{--<g:link controller="production" action="edit" class="dropdown-item">--}%
+                        %{--<i class="fa fa-check-square" aria-hidden="true"></i>--}%
+                        %{--Cerrar producción--}%
+                    %{--</g:link>--}%
                     <g:link controller="production" action="index" class="dropdown-item">
                         <i class="fa fa-search" aria-hidden="true"></i>
                         Ver producciones

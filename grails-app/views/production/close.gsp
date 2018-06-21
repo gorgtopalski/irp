@@ -3,7 +3,7 @@
     <head>
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'production.label', default: 'Production')}" />
-        <title><g:message code="default.show.label" args="[entityName]" /></title>
+        <title><g:message code="default.edit.label" args="[entityName]" /></title>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
@@ -27,10 +27,9 @@
             </g:form>
         </nav>
 
-
-        <div id="show-production" class="content scaffold-show" role="main">
+        <div id="edit-production" class="content scaffold-edit" role="main">
             <br>
-            <h1><g:message code="default.show.label" args="[entityName]" /></h1>
+            <h1><g:message code="production.close.label" args="[entityName]" /></h1>
 
             <g:if test="${flash.message}">
                 <div class="alert alert-${flash.alert ?: 'primary'} alert-dismissible fade show" role="alert">
@@ -42,10 +41,15 @@
                 </div>
             </g:if>
 
-            %{--<f:display bean="production" />--}%
-
+            <g:hasErrors bean="${this.production}">
+            <ul class="errors" role="alert">
+                <g:eachError bean="${this.production}" var="error">
+                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+                </g:eachError>
+            </ul>
+            </g:hasErrors>
             <f:with bean="production">
-                <f:display property="model" wrapper="domainFields"/>
+                <f:display property="model" wrapper="domainSelect"/>
 
                 <div class="row">
                     <div class="col-md-6">
@@ -53,40 +57,29 @@
                         <f:display property="finishDate" wrapper="domainDate"/>
                     </div>
                     <div class="col-md-6">
-                        <f:display property="line" wrapper="domainFields"/>
+                        <f:display property="line" wrapper="domainSelect"/>
                         <f:display property="active" wrapper="domainBoolean"/>
                         <f:display property="finished" wrapper="domainBoolean"/>
                     </div>
                 </div>
-                <f:display property="totalPallets" wrapper="domainFields"/>
                 <hr>
-                <f:display property="irp" wrapper="domainList"/>
             </f:with>
-
-
-            <g:form resource="${this.production}" method="DELETE">
+            <g:form id="${this.production.id}" method="PUT" action="closeProduction">
+                <g:hiddenField name="version" value="${this.production?.version}" />
+                <fieldset class="form">
+                    <f:with bean="production">
+                        <f:field property="totalPallets"/>
+                    </f:with>
+                </fieldset>
                 <fieldset class="buttons">
-                    <div class="float-left">
-                        <button type="submit" name="delete" class="btn btn-danger" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
-                            <i class="far fa-trash-alt"></i>
-                            ${message(code: 'default.button.delete.label', default: 'Delete')}
+                    <div class="float-right">
+                        <button type="submit" name="update" class="btn btn-success">
+                            <i class="fas fa-check"></i>
+                            <g:message code="production.button.close.label" default="Cerrar" />
                         </button>
                     </div>
-                    <div class="float-right">
-                        <g:if test="${!production.finished}">
-                            <g:link class="btn btn-success" action="close" resource="${this.production}">
-                                <i class="fas fa-check"></i>
-                                Cerrar producción
-                            </g:link>
-                        </g:if>
-                        <g:link class="btn btn-warning" action="edit" resource="${this.production}">
-                            <i class="far fa-edit"></i>
-                            <g:message code="default.button.edit.label" default="Edit" />
-                        </g:link>
                 </fieldset>
-                </div>
             </g:form>
-
         </div>
     </body>
 </html>

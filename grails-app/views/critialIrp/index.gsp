@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'production.label', default: 'Production')}" />
+        <g:set var="entityName" value="${message(code: 'critialIrp.label', default: 'CritialIrp')}" />
         <title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -17,15 +17,16 @@
                     <g:message code="default.new.label" args="[entityName]"/>
                 </g:link>
             </div>
-            <g:form method="GET" action="search" controller="production" class="form-inline my-2 my-lg-0">
+            <g:form method="GET" action="search" controller="critialIrp" class="form-inline my-2 my-lg-0">
                 <input name="query" class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
             </g:form>
         </nav>
 
-        <div id="list-production" class="content scaffold-list" role="main">
+        <div id="list-critialIrp" class="content scaffold-list" role="main">
             <br>
             <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+
             <g:if test="${flash.message}">
                 <div class="alert alert-${flash.alert ?: 'primary'} alert-dismissible fade show" role="alert">
                     <i class="fas fa-exclamation-circle"></i>
@@ -36,10 +37,10 @@
                 </div>
             </g:if>
 
-            <f:table collection="${productionList}"/>
+            <f:table collection="${critialIrpList}" />
 
             <div class="pagination">
-                <g:paginate total="${productionCount ?: 0}" id="${id}"/>
+                <g:paginate total="${critialIrpCount ?: 0}" />
             </div>
 
         </div>
