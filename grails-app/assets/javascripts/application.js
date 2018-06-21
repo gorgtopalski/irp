@@ -7,6 +7,9 @@
 //
 //= require jquery
 //= require bootstrap
+//= require bootstrap-datepicker
+//= require date
+//= require tooltip
 //= require_tree .
 //= require_self
 
@@ -19,3 +22,4 @@ if (typeof jQuery !== 'undefined') {
         });
     })(jQuery);
 }
+
