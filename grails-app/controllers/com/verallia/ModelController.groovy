@@ -22,6 +22,7 @@ class ModelController {
     }
 
     def show(Long id) {
+
         def model = modelService.get(id)
         if (model)
         {
@@ -113,11 +114,6 @@ class ModelController {
             }
             '*'{ render status: NO_CONTENT }
         }
-    }
-
-    def search() {
-        notFound()
-        return
     }
 
     protected void notFound() {

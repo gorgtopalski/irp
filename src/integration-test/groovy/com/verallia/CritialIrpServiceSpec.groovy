@@ -34,7 +34,7 @@ class CritialIrpServiceSpec extends Specification {
         setupData()
 
         when:
-        List<CritialIrp> critialIrpList = critialIrpService.list(max: 2, offset: 2)
+        List<Irp> critialIrpList = critialIrpService.list(max: 2, offset: 2)
 
         then:
         critialIrpList.size() == 2
@@ -65,7 +65,7 @@ class CritialIrpServiceSpec extends Specification {
     void "test save"() {
         when:
         assert false, "TODO: Provide a valid instance to save"
-        CritialIrp critialIrp = new CritialIrp()
+        Irp critialIrp = new Irp()
         critialIrpService.save(critialIrp)
 
         then:

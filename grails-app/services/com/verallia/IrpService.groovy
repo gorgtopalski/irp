@@ -15,12 +15,26 @@ abstract class IrpService {
 
     abstract Irp save(Irp irp)
 
-    List<Irp> getLast10WhereProductions(Collection<Production> productions)
+    List<Irp> getLast10WhereProductions(List<Production> productions)
     {
-        Irp.findAllByProductionInListAndPending(productions.toList(),true)
-                .sort{ a,b -> b.date <=> a.date}
-                .take(10)
+        Irp.findAllByProductionInListAndPending(productions,true, [sort: 'date', order: 'desc', max: 10])
     }
 
+    List<Irp> findAllByProductionAndPending(Production production, boolean pending, Map args)
+    {
+        Irp.findAllByProductionAndPending(production,pending,args)
+    }
+
+    List<Irp> allFromLastSevenDays()
+    {
+        Irp.findAllByDateBetween(new Date()-6, new Date())
+    }
+
+    List<Irp> search(String query)
+    {
+        println  query
+    }
+
+    abstract List<Irp> findAllByPending(boolean pending, Map args)
 
 }

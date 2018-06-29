@@ -8,8 +8,7 @@
 //= require jquery
 //= require bootstrap
 //= require bootstrap-datepicker
-//= require date
-//= require tooltip
+//= require custom
 //= require_tree .
 //= require_self
 

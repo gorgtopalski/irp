@@ -3,8 +3,6 @@ package com.verallia
 import com.verallia.controller.traits.DefaultListSort
 import grails.validation.ValidationException
 
-import java.text.SimpleDateFormat
-
 import static org.springframework.http.HttpStatus.*
 
 class ProductionController implements DefaultListSort
@@ -15,13 +13,13 @@ class ProductionController implements DefaultListSort
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10,100)
-        listByStartDateAsc()
+        listByStartDateDesc()
         respond productionService.list(params), model:[productionCount: productionService.count()]
     }
 
     def active(Integer max) {
         params.max = Math.min(max ?: 10,100)
-        listByStartDateAsc()
+        listByLineAsc()
         def active = productionService.findAllByActive(true,params)
         respond active, model:[productionCount: productionService.countByActive(true)]
     }
@@ -32,6 +30,11 @@ class ProductionController implements DefaultListSort
 
     def create() {
         respond new Production(params)
+    }
+
+    def map(Long id)
+    {
+        respond productionService.getProductionMap(id)
     }
 
     def save(Production production) {
@@ -182,11 +185,6 @@ class ProductionController implements DefaultListSort
         }
     }
 
-    def search() {
-        notFound()
-        return
-    }
-
     protected void notFound() {
         request.withFormat {
             form multipartForm {
@@ -219,4 +217,8 @@ class ProductionController implements DefaultListSort
 
         return production
     }
+
+
 }
+
+

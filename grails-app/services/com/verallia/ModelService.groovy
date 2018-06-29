@@ -23,4 +23,16 @@ abstract class ModelService {
 
         return list
     }
+
+    List<Model> search(String query)
+    {
+
+        query = '%'+query+'%'
+
+        def values = Model.findAllByNameIlike(query)
+        values.addAll(Model.findAllByBlueprintIlike(query))
+        values = values.unique { a,b -> a.id <=> b.id }
+
+        return values
+    }
 }

@@ -5,7 +5,7 @@ import grails.testing.web.controllers.ControllerUnitTest
 import grails.validation.ValidationException
 import spock.lang.*
 
-class CritialIrpControllerSpec extends Specification implements ControllerUnitTest<CritialIrpController>, DomainUnitTest<CritialIrp> {
+class CriticalControllerSpec extends Specification implements ControllerUnitTest<CriticalController>, DomainUnitTest<Irp> {
 
     def populateValidParams(params) {
         assert params != null
@@ -17,7 +17,7 @@ class CritialIrpControllerSpec extends Specification implements ControllerUnitTe
 
     void "Test the index action returns the correct model"() {
         given:
-        controller.critialIrpService = Mock(CritialIrpService) {
+        controller.criticalService = Mock(CriticalService) {
             1 * list(_) >> []
             1 * count() >> 0
         }
@@ -26,8 +26,8 @@ class CritialIrpControllerSpec extends Specification implements ControllerUnitTe
         controller.index()
 
         then:"The model is correct"
-        !model.critialIrpList
-        model.critialIrpCount == 0
+        !model.criticalList
+        model.criticalCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -35,7 +35,7 @@ class CritialIrpControllerSpec extends Specification implements ControllerUnitTe
         controller.create()
 
         then:"The model is correctly created"
-        model.critialIrp!= null
+        model.critical!= null
     }
 
     void "Test the save action with a null instance"() {
@@ -45,14 +45,14 @@ class CritialIrpControllerSpec extends Specification implements ControllerUnitTe
         controller.save(null)
 
         then:"A 404 error is returned"
-        response.redirectedUrl == '/critialIrp/index'
+        response.redirectedUrl == '/critical/index'
         flash.message != null
     }
 
     void "Test the save action correctly persists"() {
         given:
-        controller.critialIrpService = Mock(CritialIrpService) {
-            1 * save(_ as CritialIrp)
+        controller.criticalService = Mock(CriticalService) {
+            1 * save(_ as Irp)
         }
 
         when:"The save action is executed with a valid instance"
@@ -60,38 +60,38 @@ class CritialIrpControllerSpec extends Specification implements ControllerUnitTe
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'POST'
         populateValidParams(params)
-        def critialIrp = new CritialIrp(params)
-        critialIrp.id = 1
+        def critical = new Irp(params)
+        critical.id = 1
 
-        controller.save(critialIrp)
+        controller.save(critical)
 
         then:"A redirect is issued to the show action"
-        response.redirectedUrl == '/critialIrp/show/1'
+        response.redirectedUrl == '/critical/show/1'
         controller.flash.message != null
     }
 
     void "Test the save action with an invalid instance"() {
         given:
-        controller.critialIrpService = Mock(CritialIrpService) {
-            1 * save(_ as CritialIrp) >> { CritialIrp critialIrp ->
-                throw new ValidationException("Invalid instance", critialIrp.errors)
+        controller.criticalService = Mock(CriticalService) {
+            1 * save(_ as Irp) >> { Irp critical ->
+                throw new ValidationException("Invalid instance", critical.errors)
             }
         }
 
         when:"The save action is executed with an invalid instance"
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'POST'
-        def critialIrp = new CritialIrp()
-        controller.save(critialIrp)
+        def critical = new Irp()
+        controller.save(critical)
 
         then:"The create view is rendered again with the correct model"
-        model.critialIrp != null
+        model.critical != null
         view == 'create'
     }
 
     void "Test the show action with a null id"() {
         given:
-        controller.critialIrpService = Mock(CritialIrpService) {
+        controller.criticalService = Mock(CriticalService) {
             1 * get(null) >> null
         }
 
@@ -104,20 +104,20 @@ class CritialIrpControllerSpec extends Specification implements ControllerUnitTe
 
     void "Test the show action with a valid id"() {
         given:
-        controller.critialIrpService = Mock(CritialIrpService) {
-            1 * get(2) >> new CritialIrp()
+        controller.criticalService = Mock(CriticalService) {
+            1 * get(2) >> new Irp()
         }
 
         when:"A domain instance is passed to the show action"
         controller.show(2)
 
         then:"A model is populated containing the domain instance"
-        model.critialIrp instanceof CritialIrp
+        model.critical instanceof Irp
     }
 
     void "Test the edit action with a null id"() {
         given:
-        controller.critialIrpService = Mock(CritialIrpService) {
+        controller.criticalService = Mock(CriticalService) {
             1 * get(null) >> null
         }
 
@@ -130,15 +130,15 @@ class CritialIrpControllerSpec extends Specification implements ControllerUnitTe
 
     void "Test the edit action with a valid id"() {
         given:
-        controller.critialIrpService = Mock(CritialIrpService) {
-            1 * get(2) >> new CritialIrp()
+        controller.criticalService = Mock(CriticalService) {
+            1 * get(2) >> new Irp()
         }
 
         when:"A domain instance is passed to the show action"
         controller.edit(2)
 
         then:"A model is populated containing the domain instance"
-        model.critialIrp instanceof CritialIrp
+        model.critical instanceof Irp
     }
 
 
@@ -149,14 +149,14 @@ class CritialIrpControllerSpec extends Specification implements ControllerUnitTe
         controller.update(null)
 
         then:"A 404 error is returned"
-        response.redirectedUrl == '/critialIrp/index'
+        response.redirectedUrl == '/critical/index'
         flash.message != null
     }
 
     void "Test the update action correctly persists"() {
         given:
-        controller.critialIrpService = Mock(CritialIrpService) {
-            1 * save(_ as CritialIrp)
+        controller.criticalService = Mock(CriticalService) {
+            1 * save(_ as Irp)
         }
 
         when:"The save action is executed with a valid instance"
@@ -164,31 +164,31 @@ class CritialIrpControllerSpec extends Specification implements ControllerUnitTe
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'PUT'
         populateValidParams(params)
-        def critialIrp = new CritialIrp(params)
-        critialIrp.id = 1
+        def critical = new Irp(params)
+        critical.id = 1
 
-        controller.update(critialIrp)
+        controller.update(critical)
 
         then:"A redirect is issued to the show action"
-        response.redirectedUrl == '/critialIrp/show/1'
+        response.redirectedUrl == '/critical/show/1'
         controller.flash.message != null
     }
 
     void "Test the update action with an invalid instance"() {
         given:
-        controller.critialIrpService = Mock(CritialIrpService) {
-            1 * save(_ as CritialIrp) >> { CritialIrp critialIrp ->
-                throw new ValidationException("Invalid instance", critialIrp.errors)
+        controller.criticalService = Mock(CriticalService) {
+            1 * save(_ as Irp) >> { Irp critical ->
+                throw new ValidationException("Invalid instance", critical.errors)
             }
         }
 
         when:"The save action is executed with an invalid instance"
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'PUT'
-        controller.update(new CritialIrp())
+        controller.update(new Irp())
 
         then:"The edit view is rendered again with the correct model"
-        model.critialIrp != null
+        model.critical != null
         view == 'edit'
     }
 
@@ -199,13 +199,13 @@ class CritialIrpControllerSpec extends Specification implements ControllerUnitTe
         controller.delete(null)
 
         then:"A 404 is returned"
-        response.redirectedUrl == '/critialIrp/index'
+        response.redirectedUrl == '/critical/index'
         flash.message != null
     }
 
     void "Test the delete action with an instance"() {
         given:
-        controller.critialIrpService = Mock(CritialIrpService) {
+        controller.criticalService = Mock(CriticalService) {
             1 * delete(2)
         }
 
@@ -215,7 +215,7 @@ class CritialIrpControllerSpec extends Specification implements ControllerUnitTe
         controller.delete(2)
 
         then:"The user is redirected to index"
-        response.redirectedUrl == '/critialIrp/index'
+        response.redirectedUrl == '/critical/index'
         flash.message != null
     }
 }

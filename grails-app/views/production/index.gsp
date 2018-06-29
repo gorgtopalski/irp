@@ -2,39 +2,33 @@
 <html>
     <head>
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'production.label', default: 'Production')}" />
-        <title><g:message code="default.list.label" args="[entityName]" /></title>
+        <g:set var="page" value="${message(code: 'production.view.index.label')}"/>
+        <title><g:message code="title"/> / ${page} </title>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-            <div class="navbar-nav mr-auto">
-                <a class="nav-item nav-link" href="${createLink(uri: '/')}">
-                    <i class="fas fa-home"></i>
-                    <g:message code="default.home.label"/>
-                </a>
-                <g:link class="nav-item nav-link" action="create">
-                    <i class="far fa-plus-square"></i>
-                    <g:message code="default.new.label" args="[entityName]"/>
-                </g:link>
-            </div>
-            <g:form method="GET" action="search" controller="production" class="form-inline my-2 my-lg-0">
-                <input name="query" class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-            </g:form>
-        </nav>
-
         <div id="list-production" class="content scaffold-list" role="main">
             <br>
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-                <div class="alert alert-${flash.alert ?: 'primary'} alert-dismissible fade show" role="alert">
-                    <i class="fas fa-exclamation-circle"></i>
-                    ${flash.message}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+            <div>
+                <div class="float-left h1">
+                    ${page}
                 </div>
-            </g:if>
+
+                <div class="float-right align-baseline">
+                    <g:form action="index">
+                        <div class="input-group">
+                            <g:select name="max" from="${[10,20,50,100]}" value="${params.max}" class="custom-select"/>
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary" type="submit" name="index">
+                                    <i class="fas fa-search"></i>
+                                    <g:message code="show"/>
+                                </button>
+                            </div>
+                        </div>
+                    </g:form>
+                </div>
+            </div>
+
+            <irp:alert flash="${flash}"/>
 
             <f:table collection="${productionList}"/>
 

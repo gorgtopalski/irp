@@ -25,9 +25,15 @@ class  Production
     @Override
     String toString() {
 
-        def start = startDate ? startDate.format('dd/MM/YY') : '*'
-        def end = finishDate ? finishDate.format('dd/MM/YY') : '*'
+        if (active)
+        {
+            return "L-$line / $model.name"
+        }
+        else {
+            def start = startDate ? startDate.format('dd/MM/YY') : '*'
+            def end = finishDate ? finishDate.format('dd/MM/YY') : '*'
 
-        return "[ $start - $end ] L-$line"
+            return "[ $start - $end ] L-$line / $model.name"
+        }
     }
 }

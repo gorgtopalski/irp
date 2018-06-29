@@ -1,7 +1,6 @@
 package com.verallia
 
 import grails.util.Environment
-import org.dom4j.rule.Mode
 
 class BootStrap {
 
@@ -60,6 +59,10 @@ class BootStrap {
         models << new Model(blueprint: '4185WB', name: 'Cava 75').save()
         models << new Model(blueprint: '6837WA', name: 'Hoja 75').save()
         models << new Model(blueprint: '6841WB', name: 'Bord 75 Eco Optima RE').save()
+        models << new Model(blueprint: '6842WB', name: 'Bord 75 Eco RE').save()
+        models << new Model(blueprint: '6843WB', name: 'Bord 75 Ecova RE').save()
+        models << new Model(blueprint: '6844WB', name: 'Bord 75 Optima RE').save()
+        models << new Model(blueprint: '6845WB', name: 'Bord 75 Ecova Optima').save()
         models << new Model(blueprint: '7050WA', name: 'Bord 75 Toro Loco BVS').save(flush:true)
 
         (0..500).each {
@@ -83,26 +86,41 @@ class BootStrap {
             ).save(flush: true)
         }
 
+        def motives = ['BA', 'BR', 'IB', 'MEG', 'PIR']
+        def criticals = ['RIB', 'AG']
+
         def active  = []
 
         active << new Production(
-                model: models[0],
+                model: models[5],
                 line: lines[1],
                 active: true,
                 startDate: new Date()-1,
-                totalPallets: 20
+                totalPallets: 50
         ).save()
 
+        new Irp(
+            production: active[0],
+            date: new Date(),
+            pending: true,
+            critical: false,
+            motive: 'BA Nº2',
+            team: teams[2],
+            labels: true,
+            shift: shifts[1],
+            firstPallet: 10
+        ).save(flush:true)
+
         active << new Production(
-                model: models[1],
+                model: models[6],
                 line: lines[2],
                 active: true,
                 startDate: new Date()-1,
-                totalPallets: 20
+                totalPallets: 80
         ).save()
 
         active << new Production(
-                model: models[2],
+                model: models[0],
                 line: lines[4],
                 active: true,
                 startDate: new Date()-2,
@@ -114,7 +132,7 @@ class BootStrap {
                 line: lines[5],
                 active: true,
                 startDate: new Date()-2,
-                totalPallets: 112
+                totalPallets: 145
         ).save()
 
         active << new Production(
@@ -122,44 +140,52 @@ class BootStrap {
                 line: lines[6],
                 active: true,
                 startDate: new Date()-3,
-                totalPallets: 225
+                totalPallets: 355
         ).save(flush:true)
 
-        def motives = ['BA', 'BR', 'IB', 'MEG', 'PIR']
-        def criticals = ['RIB', 'AG']
+        20.times {
 
-        (0..4).each {
+            def randomize = Math.abs( it * rand.nextDouble()).toInteger()
 
-            def production = active.get((it%active.size()))
-            def motive = motives.get(it%motives.size())+" Nº${it%25}"
-            def shift = shifts.get(it%shifts.size())
-            def team = teams.get(it%teams.size())
-            def pending = it % 2 == 0
-            def labels = it % 2 == 0
+            def production = active.get((randomize % active.size())) as Production
+            def motive = motives.get(randomize % motives.size())+" Nº${it%25}"
+            def shift = shifts.get(randomize % shifts.size()) as Shift
+            def team = teams.get(randomize % teams.size()) as Team
+            def pending = false
+            def labels = randomize % 2 == 0
+            def date = new Date()-(it+1)
 
-            new Irp(
-                    production: production,
-                    date: new Date()-it,
-                    pending: pending,
-                    motive: motive,
-                    team: team,
-                    labels: labels,
-                    shift: shift,
-            ).save(flush:true)
+            if (randomize % 2 == 0)
+            {
+                new Irp(
+                        production: production,
+                        date: date,
+                        pending: pending,
+                        critical: false,
+                        motive: motive,
+                        team: team,
+                        firstPallet: it,
+                        labels: labels,
+                        shift: shift,
+                ).save(flush:true)
 
-            new CritialIrp(
-                    production: production,
-                    date: new Date().clearTime(),
-                    pending: pending,
-                    motive: criticals.get(it % criticals.size())+" Nº$it" ,
-                    team: team,
-                    labels: labels,
-                    shift: shift,
-                    critical: true,
-                    isFoundInVF: true,
-                    isFoundInVC: false
-            ).save(flush:true)
+            }
+            else {
+                //Critical
+                new Irp(
+                        production: production,
+                        date:date,
+                        pending: pending,
+                        motive: criticals.get(it % criticals.size())+" Nº$it" ,
+                        team: team,
+                        labels: labels,
+                        shift: shift,
+                        critical: true,
+                        firstPallet: it,
+                        isFoundInVF: true,
+                        isFoundInVC: false
+                ).save(flush:true)
+            }
         }
-
     }
 }

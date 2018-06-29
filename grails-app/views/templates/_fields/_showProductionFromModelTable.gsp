@@ -18,7 +18,7 @@
                 </td>
             </g:each>
             <td>
-                <g:link class="align-baseline text-warning" action="edit" resource="${bean}">
+                <g:link class="align-baseline text-primary" action="edit" resource="${bean}">
                     <i class="far fa-edit"></i>
                 </g:link>
             </td>

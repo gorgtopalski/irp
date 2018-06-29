@@ -2,57 +2,151 @@
 <html>
     <head>
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'irp.label', default: 'Irp')}" />
-        <title><g:message code="default.edit.label" args="[entityName]" /></title>
+        <g:set var="page" value="${message(code: 'irp.view.edit.label')}"/>
+        <title><g:message code="title"/> / ${page} </title>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-            <div class="navbar-nav mr-auto">
-                <a class="nav-item nav-link" href="${createLink(uri: '/')}">
-                    <i class="fas fa-home"></i>
-                    <g:message code="default.home.label"/>
-                </a>
-                <g:link class="nav-item nav-link" action="create">
-                    <i class="far fa-plus-square"></i>
-                    <g:message code="default.new.label" args="[entityName]"/>
-                </g:link>
-                <g:link class="nav-item nav-link" action="index">
-                    <i class="far fa-list-alt"></i>
-                    <g:message code="default.list.label" args="[entityName]" />
-                </g:link>
-            </div>
-            <g:form method="GET" action="search" controller="irp" class="form-inline my-2 my-lg-0">
-                <input name="query" class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-            </g:form>
-        </nav>
-
         <div id="edit-irp" class="content scaffold-edit" role="main">
             <br>
-            <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
+            <h1>${page}</h1>
 
-            <g:if test="${flash.message}">
-                <div class="alert alert-${flash.alert ?: 'primary'} alert-dismissible fade show" role="alert">
-                    <i class="fas fa-exclamation-circle"></i>
-                    ${flash.message}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </g:if>
+            <irp:alert flash="${flash}"/>
 
-            <g:hasErrors bean="${this.irp}">
-            <ul class="errors" role="alert">
-                <g:eachError bean="${this.irp}" var="error">
-                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-                </g:eachError>
-            </ul>
-            </g:hasErrors>
             <g:form resource="${this.irp}" method="PUT">
                 <g:hiddenField name="version" value="${this.irp?.version}" />
                 <fieldset class="form">
-                    <f:all bean="irp"/>
+            %{--<f:all bean="irp"/>--}%
+
+                <f:with bean="irp">
+                    <div class="row">
+                        <div class="col">
+                            <f:field property="date"/>
+                        </div>
+                        <div class="col">
+                            <f:field property="production"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <f:field property="motive"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <f:field property="team"/>
+                            <f:field property="shift"/>
+
+                        </div>
+                        <div class="col">
+                            <f:field property="firstPallet"/>
+                            <f:display property="lastPallet" wrapper="domainFields"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <f:field property="comment"/>
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    <f:field property="critical"/>
+                                    <f:field property="pending"/>
+                                </div>
+                                <div class="col">
+                                    <f:field property="labels"/>
+                                    <f:field property="wholeShift"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col border-right">
+                            <div class="row">
+
+                                <div class="col">
+                                    <f:field property="isFoundInVC"/>
+                                    <f:field property="isRejected"/>
+                                </div>
+                                <div class="col">
+                                    <f:field property="bottleNumber"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <f:field property="rejectionStart" widget="ejectionTime" wrapper="ejectionTime" theme="ejectionTime"/>
+                                </div>
+                                <div class="col">
+                                    <f:field property="rejectionEnd" widget="ejectionTime" wrapper="ejectionTime" theme="ejectionTime"/>
+                                </div>
+                            </div>
+
+
+                            <f:field property="isVerified"/>
+                            <f:field property="origin"/>
+                            <f:field property="corrections"/>
+                        </div>
+                        <div class="col">
+
+                            <div class="row">
+                                <div class="col">
+                                    <f:field property="isFoundInVF"/>
+                                    <f:field property="isRejectedByLNM"/>
+                                </div>
+                                <div class="col">
+                                    <f:field property="lnmBotleNumber"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <f:field property="lnmRejectionStart" widget="ejectionTime" wrapper="ejectionTime" theme="ejectionTime"/>
+                                </div>
+                                <div class="col">
+                                    <f:field property="lnmRejectionEnd" widget="ejectionTime" wrapper="ejectionTime" theme="ejectionTime"/>
+                                </div>
+                            </div>
+
+                            <f:field property="checkLNM5Bottles"/>
+
+                            <div class="row">
+                                <div class="col">
+
+                                    <label for="detected">
+                                        Se encuentra en:
+                                    </label>
+                                    <div class="form-group" id="detected">
+                                        <div class="form-check">
+                                            <f:field property="detectedInInspectionMachine"/>
+                                            <f:field property="detectedInFabricacionAndFoundInArcha"/>
+                                            <f:field property="detectedInTDB"/>
+                                            <f:field property="detectedInTDP"/>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <f:field property="verifyThatIsCorrected"/>
+                            <f:field property="comments"/>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col">
+                            <f:field property="passesReliability"/>
+                            <f:field property="isAddedToReliabilityPool"/>
+
+                        </div>
+                        <div class="col">
+                            <f:field property="palletNumberWhenIncident"/>
+                            <f:field property="palletRejected"/>
+                        </div>
+                    </div>
+                    </div>
+
+                </f:with>
+
                 </fieldset>
+
                 <fieldset class="buttons">
                     <div class="float-right">
                         <button type="submit" name="update" class="btn btn-warning">
@@ -62,6 +156,11 @@
                     </div>
                 </fieldset>
             </g:form>
+
+
+
+
+
         </div>
     </body>
 </html>

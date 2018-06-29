@@ -1,7 +1,9 @@
 package com.verallia
 
 import grails.validation.ValidationException
-import groovy.time.TimeCategory
+
+import java.text.ParseException
+import java.text.SimpleDateFormat
 
 import static org.springframework.http.HttpStatus.*
 
@@ -9,12 +11,28 @@ class IrpController {
 
     IrpService irpService
     ProductionService productionService
+    AuditService auditService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond irpService.list(params), model:[irpCount: irpService.count()]
+    }
+
+    def pending(Long production)
+    {
+        params.sort='date'
+        params.order='desc'
+
+        if (production)
+        {
+            def prod = productionService.get(production)
+            respond irpService.findAllByProductionAndPending(prod,true,params)
+        }
+        else {
+            respond irpService.findAllByPending(true,params)
+        }
     }
 
     def show(Long id) {
@@ -25,18 +43,14 @@ class IrpController {
         def irp = new Irp(params)
 
         irp.date = irp.date ?: new Date()
-
-        if (params.production.id )
-            irp.production = productionService.get(params.production.id as Serializable)
+        irp.pending = irp.pending ?: true
 
         respond irp
     }
 
-    def save(Irp irp) {
-        if (irp == null) {
-            notFound()
-            return
-        }
+    def close(Irp irp)
+    {
+        irp.pending=false
 
         try {
             irpService.save(irp)
@@ -44,6 +58,39 @@ class IrpController {
             respond irp.errors, view:'create'
             return
         }
+
+        flash.message = message(code: 'default.updated.message', args: [message(code: 'irp.label', default: 'Irp'), irp.toString()])
+        flash.alert = 'success'
+
+        respond irp, view: 'show'
+    }
+
+    def createCritical() {
+        def irp = new Irp(params)
+
+        irp.date = irp.date ?: new Date()
+        irp.critical = irp.critical ?: true
+        irp.pending = irp.pending ?: true
+
+        respond irp
+    }
+
+    def save(Irp irp) {
+
+        if (irp == null) {
+            notFound()
+            return
+        }
+
+        try {
+            irp = fillDatesFromForm(irp)
+            irpService.save(irp)
+        } catch (ValidationException e) {
+            respond irp.errors, view: irp.critical ? 'createCritical' : 'create'
+            return
+        }
+
+        auditService.createFirstAudit(irp)
 
         request.withFormat {
             form multipartForm {
@@ -66,9 +113,10 @@ class IrpController {
         }
 
         try {
+            irp = fillDatesFromForm(irp)
             irpService.save(irp)
         } catch (ValidationException e) {
-            respond irp.errors, view:'edit'
+            respond irp.errors, view: irp.critical ? 'createCritical' : 'create'
             return
         }
 
@@ -102,11 +150,6 @@ class IrpController {
         }
     }
 
-    def search() {
-        notFound()
-        return
-    }
-
     protected void notFound() {
         request.withFormat {
             form multipartForm {
@@ -118,5 +161,63 @@ class IrpController {
         }
     }
 
+    private Irp fillDatesFromForm(Irp irp)
+    {
+        def sdf = new SimpleDateFormat('dd/MM/yyyy HH:mm')
+
+        if (params.rejectionStart)
+        {
+            def rejectTime = 'rejectionStart'
+            def dateString = params.get(rejectTime).toString().trim() +" "+
+                    params.get(rejectTime+"Hours").toString() +":"+
+                    params.get(rejectTime+"Minutes").toString()
+
+            try {
+                irp.rejectionStart = sdf.parse(dateString)
+            }
+            catch(ParseException ex) {}
+        }
+
+        if (params.rejectionEnd)
+        {
+            def rejectTime = 'rejectionEnd'
+            def dateString = params.get(rejectTime).toString().trim() +" "+
+                    params.get(rejectTime+"Hours").toString() +":"+
+                    params.get(rejectTime+"Minutes").toString()
+
+            try {
+                irp.rejectionEnd = sdf.parse(dateString)
+            }
+            catch(ParseException ex) {}
+        }
+
+        if (params.lnmRejectionStart)
+        {
+            def rejectTime = 'lnmRejectionStart'
+            def dateString = params.get(rejectTime).toString().trim() +" "+
+                    params.get(rejectTime+"Hours").toString() +":"+
+                    params.get(rejectTime+"Minutes").toString()
+
+            try {
+                irp.rejectionEnd = sdf.parse(dateString)
+            }
+            catch(ParseException ex) {}
+        }
+
+        if (params.lnmRejectionEnd)
+        {
+            def rejectTime = 'lnmRejectionEnd'
+            def dateString = params.get(rejectTime).toString().trim() +" "+
+                    params.get(rejectTime+"Hours").toString() +":"+
+                    params.get(rejectTime+"Minutes").toString()
+
+            try {
+                irp.rejectionEnd = sdf.parse(dateString)
+            }
+            catch(ParseException ex) {}
+        }
+
+        return irp
+    }
 
 }

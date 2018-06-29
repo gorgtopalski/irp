@@ -2,14 +2,37 @@ package com.verallia
 
 class HomeController {
 
-    ProductionService productionService
-    IrpService irpService
+    HomeService homeService
 
-    def index() {
+    def index()
+    {
+        respond homeService.getIndexData(), view: 'index'
+    }
 
-        def activeProductions = productionService.findAllByActive(true, [sort: 'line', order: 'asc'])
-        def last10Irps = irpService.getLast10WhereProductions(activeProductions)
+    def search(String query)
+    {
+        def str = query.trim()
 
-        respond([productionList: activeProductions, irpList: last10Irps], view: 'index')
+        if (str)
+        {
+            def data = homeService.search(str)
+
+            if (!data.models.isEmpty())
+            {
+                respond([data: data])
+                return
+            }
+            else {
+                flash.message = "Sin resultados para \"$str\""
+                flash.alert = 'warning'
+                redirect action: 'index'
+                return
+            }
+        }
+        else
+        {
+            redirect action: 'index'
+            return
+        }
     }
 }
